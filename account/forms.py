@@ -32,7 +32,7 @@ class UserProfileForm(forms.ModelForm):
 class UserInfoForm(forms.ModelForm):
     class Meta:
         model = UserInfo
-        fields = ("school","company","profession","address","aboutme","photo")
+        fields = ("school","company","profession","address","aboutme")
 
 
 class UserForm(forms.ModelForm):

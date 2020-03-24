@@ -95,5 +95,5 @@ def myself_edit(request):
 
 
 
-def my_image(request):
-    return render(request,'account/imagecrop.html')
+# def my_image(request):
+#     return render(request,'account/imagecrop.html')

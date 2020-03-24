@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'account',
+    'article',
 ]
 
 MIDDLEWARE = [
@@ -146,11 +147,11 @@ LOGIN_REDIRECT_URL = '/blog/'
 LOGIN_URL = '/account/login/'
 
 EMAIL_HOST = 'smtp.163.com'
-EMAIL_HOST_USER = "yanwenming_@163.com"
+EMAIL_HOST_USER = "yanwenming_sz@163.com"
 EMAIL_HOST_PASSWORD ="TWMXAVMGFQEJPSHW"
 EMAIL_PORT =25
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "yanwenming_@163.com"
+DEFAULT_FROM_EMAIL = "yanwenming_sz@163.com"
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
