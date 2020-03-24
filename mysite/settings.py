@@ -151,3 +151,6 @@ EMAIL_HOST_PASSWORD ="TWMXAVMGFQEJPSHW"
 EMAIL_PORT =25
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "yanwenming_@163.com"
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
