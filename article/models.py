@@ -27,15 +27,15 @@ class ArticlePost(models.Model) :
     updated = models.DateTimeField(auto_now = True)
 
     class Meta :
-        ordering = ("title" ,)
-        index_together = (('id' , 'slug'),)
+        ordering = ("-updated",)
+        index_together = (('id', 'slug'),)
 
     def __str__( self ) :
         return self.title
 
-    def save( self , *args , **kargs ) :
-        self.slug = slugify( self.title )
-        super( ArticlePost , self ).save( *args , **kargs )
+    def save(self , *args , **kargs) :
+        self.slug = slugify( self.title)
+        super(ArticlePost , self ).save(*args , **kargs)
 
     def get_absolute_url( self ) :
         return reverse( "article:article_detail" , args = [self.id , self.slug])
