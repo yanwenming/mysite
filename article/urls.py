@@ -4,5 +4,6 @@ from . import views
 
 app_name = "article"
 urlpatterns = [
-    path('article-column/',views.article_column,name="article_column")
+    path('article-column/',views.article_column,name="article_column"),
+    path('rename-column/', views.rename_article_column, name="rename_article_column"),
 ]
