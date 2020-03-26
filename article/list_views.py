@@ -2,11 +2,17 @@ from django.shortcuts import render
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from .models import ArticleColumn,ArticlePost
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 
 
-def article_titles(request):
-    article_title = ArticlePost.objects.all()
-    paginator = Paginator(article_title,2)
+def article_titles(request,username=None):
+    if username:
+        user = User.objects.get(username=username)
+        articles_title = ArticlePost.objects.filter(author=user)
+    else:
+        articles_title = ArticlePost.objects.all()
+    # article_title = ArticlePost.objects.all()
+    paginator = Paginator(articles_title,2)
     page = request.GET.get('page')
     try:
         current_page = paginator.page(page)
