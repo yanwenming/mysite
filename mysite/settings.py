@@ -155,3 +155,10 @@ DEFAULT_FROM_EMAIL = "yanwenming_sz@163.com"
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#添加Redis数据库配置信息
+REDIS_HOST = 'localhost'
+
+REDIS_PORT = 6379
+
+REDIS_DB = 0

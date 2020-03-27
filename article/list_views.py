@@ -7,6 +7,9 @@ from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+import redis
+from django.conf import settings
+r = redis.StrictRedis(host=settings.REDIS_HOST,port=settings.REDIS_PORT,db=settings.REDIS_DB)
 
 
 def article_titles(request,username=None):
@@ -40,7 +43,13 @@ def article_titles(request,username=None):
 
 def article_detail(request,id,slug):
     article = get_object_or_404(ArticlePost,id=id,slug=slug)
-    return render(request,"article/list/article_content.html",{"article":article})
+    total_views = r.incr("article:{}:views".format(article.id)) #记录每一个文章的访问次数
+    r.zincrby('article_ranking',1,article.id) #1 根据amount所设定的值增加有序集合name中的value值
+    article_ranking = r.zrange('article_ranking',0,-1,desc=True)[:10] #2获取article_ranking中排序前10的对象
+    article_ranking_ids = [int(id) for id in article_ranking]
+    most_viewed = list(ArticlePost.objects.filter(id__in=article_ranking_ids)) #3
+    most_viewed.sort(key=lambda x:article_ranking_ids.index(x.id))
+    return render(request,"article/list/article_content.html",{"article":article,"total_views":total_views,"most_viewed":most_viewed})
 
 
 @csrf_exempt
