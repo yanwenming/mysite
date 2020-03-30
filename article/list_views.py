@@ -1,15 +1,17 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-from .models import ArticleColumn,ArticlePost
+from .models import ArticleColumn,ArticlePost,Comment
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from .forms import CommentForm
+
 import redis
 from django.conf import settings
-r = redis.StrictRedis(host=settings.REDIS_HOST,port=settings.REDIS_PORT,db=settings.REDIS_DB)
+r = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB)
 
 
 def article_titles(request,username=None):
@@ -42,13 +44,21 @@ def article_titles(request,username=None):
 
 
 def article_detail(request,id,slug):
-    article = get_object_or_404(ArticlePost,id=id,slug=slug)
+    article = get_object_or_404(ArticlePost,id=id,slug=slug)#调用django get_object_or_404方法，它会默认的调用django 的get方法， 如果查询的对象不存在的话，会抛出一个Http404的异常
     total_views = r.incr("article:{}:views".format(article.id)) #记录每一个文章的访问次数
-    r.zincrby('article_ranking',1,article.id) #1 根据amount所设定的值增加有序集合name中的value值
-    article_ranking = r.zrange('article_ranking',0,-1,desc=True)[:10] #2获取article_ranking中排序前10的对象
+    r.zincrby('article_ranking',1,article.id) #根据amount所设定的值增加有序集合name中的value值
+    article_ranking = r.zrange('article_ranking',0,-1,desc=True)[:10] #获取article_ranking中排序前10的对象
     article_ranking_ids = [int(id) for id in article_ranking]
     most_viewed = list(ArticlePost.objects.filter(id__in=article_ranking_ids)) #3
     most_viewed.sort(key=lambda x:article_ranking_ids.index(x.id))
+    if request.method == "POST":
+        comment_form = CommentForm(data = require_POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit = False)
+            new_comment.article = article
+            new_comment.save()
+        else:
+            comment_form = CommentForm()
     return render(request,"article/list/article_content.html",{"article":article,"total_views":total_views,"most_viewed":most_viewed})
 
 

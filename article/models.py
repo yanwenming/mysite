@@ -43,3 +43,18 @@ class ArticlePost(models.Model) :
 
     def get_url_path( self ):
         return reverse("article:article_content", args = [self.id , self.slug])
+
+
+#评论功能数据模型
+class Comment(models.Model):
+    article = models.ForeignKey(ArticlePost,on_delete = models.CASCADE,related_name = "comments") #将本数据模型与ArticlePost数据模型建立多对一的关系，即一篇文章可以有多条评论
+    commentator = models.CharField(max_length = 90)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add = True)
+
+    class Meta:
+        ordering = ('-created',) #按照created的倒序排序
+
+    def __str__(self):
+        return "Comment by {0} on {1}.format(self.commentator.username,self.article)"
+
