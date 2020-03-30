@@ -43,23 +43,32 @@ def article_titles(request,username=None):
     return render(request, "article/list/article_titles.html", {"articles": articles, "page": current_page})
 
 
-def article_detail(request,id,slug):
-    article = get_object_or_404(ArticlePost,id=id,slug=slug)#调用django get_object_or_404方法，它会默认的调用django 的get方法， 如果查询的对象不存在的话，会抛出一个Http404的异常
-    total_views = r.incr("article:{}:views".format(article.id)) #记录每一个文章的访问次数
-    r.zincrby('article_ranking',1,article.id) #根据amount所设定的值增加有序集合name中的value值
-    article_ranking = r.zrange('article_ranking',0,-1,desc=True)[:10] #获取article_ranking中排序前10的对象
-    article_ranking_ids = [int(id) for id in article_ranking]
-    most_viewed = list(ArticlePost.objects.filter(id__in=article_ranking_ids)) #3
-    most_viewed.sort(key=lambda x:article_ranking_ids.index(x.id))
-    if request.method == "POST":
-        comment_form = CommentForm(data = require_POST)
-        if comment_form.is_valid():
-            new_comment = comment_form.save(commit = False)
+def article_detail( request , id , slug ) :
+    article = get_object_or_404( ArticlePost , id = id , slug = slug ) #调用django get_object_or_404方法，它会默认的调用django 的get方法， 如果查询的对象不存在的话，会抛出一个Http404的异常
+    total_views = r.incr( "article:{}:views".format ( article.id ) ) #记录每一个文章的访问次数
+    r.zincrby( 'article_ranking' , 1 , article.id ) #根据amount所设定的值增加有序集合name中的value值
+
+    article_ranking = r.zrange( "article_ranking" , 0 , -1 , desc = True )[:10] #获取article_ranking中排序前10的对象
+    article_ranking_ids = [int ( id ) for id in article_ranking]
+    most_viewed = list( ArticlePost.objects.filter ( id__in = article_ranking_ids ) )
+    most_viewed.sort( key = lambda x : article_ranking_ids.index ( x.id ) )
+
+    if request.method == "POST" :
+        comment_form = CommentForm( data = request.POST )
+        if comment_form.is_valid() :
+            new_comment = comment_form.save( commit = False )
             new_comment.article = article
             new_comment.save()
-        else:
-            comment_form = CommentForm()
-    return render(request,"article/list/article_content.html",{"article":article,"total_views":total_views,"most_viewed":most_viewed})
+    else :
+        comment_form = CommentForm ()
+    # article_tags_ids = article.article_tag.values_list ( "id" , flat = True )
+    # similar_articles = ArticlePost.objects.filter ( article_tag__in = article_tags_ids ).exclude ( id = article.id )
+    # similar_articles = similar_articles.annotate ( same_tags = Count ( "article_tag" ) ).order_by ( '-same_tags' ,
+    #                                                                                                 '-created' )[:4]
+    return render ( request , "article/list/article_content.html" ,
+                    {"article": article , "total_views": total_views , "most_viewed": most_viewed ,
+                     "comment_form": comment_form })
+    # return render(request, "article/list/article_content.html", {"article":article})
 
 
 @csrf_exempt

@@ -17,4 +17,4 @@ class ArticlePostForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment  #指定数据源
-        fields = ("commentator","body")
+        fields = ("commentator","body",)
