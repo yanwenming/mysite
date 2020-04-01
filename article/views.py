@@ -58,6 +58,7 @@ def del_article_column(request):
         return HttpResponse("2")
 
 
+#文章视图函数
 @login_required(login_url='/account/login')
 @csrf_exempt
 def article_post(request):

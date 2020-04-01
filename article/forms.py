@@ -8,6 +8,7 @@ class ArticleColumnForm(forms.ModelForm):
         fields = ("column",)
 
 
+#文章表单类
 class ArticlePostForm(forms.ModelForm):
     class Meta:
         model = ArticlePost
