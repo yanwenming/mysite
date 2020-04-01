@@ -50,7 +50,7 @@ def article_detail( request , id , slug ) :
 
     article_ranking = r.zrange( "article_ranking" , 0 , -1 , desc = True )[:10] #获取article_ranking中排序前10的对象
     article_ranking_ids = [int ( id ) for id in article_ranking]
-    most_viewed = list( ArticlePost.objects.filter ( id__in = article_ranking_ids ) )
+    most_viewed = list( ArticlePost.objects.filter( id__in = article_ranking_ids ) )
     most_viewed.sort( key = lambda x : article_ranking_ids.index ( x.id ) )
 
     if request.method == "POST" :

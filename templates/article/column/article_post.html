@@ -21,6 +21,18 @@
             </div>
         </div>
         <div class="row" style="margin-top: 10px;">
+            <div class="col-md-2 text-right"><span>文章标签:</span></div>
+            <div class="col-md-10 text-left">
+                {% for tag in article_tags %}
+                <label class="checkbox-inline">
+                    <input class="tagcheckbox-inline" type="checkbox" id="{{ tag.id }}" name="article_tag" value="{{ tag.tag }}">{{ tag.tag }}</input>
+                </label>
+                {% empty %}
+                <p>You have not type tags for articles.Please<a href="{% url 'article:article_tag' %}">input your tags</a></p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px;">
             <div class="col-md-2 text-right"><span>内容:</span></div>
 <!--            <div class="col-md-10 text-left">{{article_post_form.body}}</div>-->
             <div id="editormd" class="col-md-10 text-left">
