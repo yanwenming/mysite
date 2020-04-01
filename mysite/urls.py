@@ -24,4 +24,5 @@ urlpatterns = [
     path('account/',include('account.urls',namespace = 'account')),
     path('article/',include('article.urls',namespace = 'article')),
     path('home/', TemplateView.as_view(template_name="home.html"), name='home'), # 这里设置name，为了在模板文件中，写name就能找到这个路由
+    path('image/',include('image.urls',namespace = 'image')),
 ]
