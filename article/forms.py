@@ -21,6 +21,7 @@ class CommentForm(forms.ModelForm):
         fields = ("commentator","body",)
 
 
+#文章标签表单类
 class ArticleTagForm(forms.ModelForm):
     class Meta:
         model = ArticleTag
