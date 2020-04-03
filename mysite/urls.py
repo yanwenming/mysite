@@ -25,8 +25,9 @@ urlpatterns = [
     path('blog/',include('blog.urls',namespace='blog')),
     path('account/',include('account.urls',namespace = 'account')),
     path('article/',include('article.urls',namespace = 'article')),
-    path('home/', TemplateView.as_view(template_name="home.html"), name='home'), # 这里设置name，为了在模板文件中，写name就能找到这个路由
+    path('home/', TemplateView.as_view(template_name="home.html"), name='home'), # 这里设置name，为了在模板文件中，写name就能找到这个路由，name参数相当于别名
     path('image/',include('image.urls',namespace = 'image')),
+    path('course/',include('course.urls',namespace='course')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
