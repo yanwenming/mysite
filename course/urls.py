@@ -1,6 +1,6 @@
 from django.urls import path
 from django.views.generic import TemplateView
-from .views import CourseListView,ManageCourseListView,CreateCourseView,DeleteCourseView,CreateLessonView,ListLessonView,DetailLessonView
+from .views import CourseListView,ManageCourseListView,CreateCourseView,DeleteCourseView,CreateLessonView,ListLessonView,DetailLessonView,StudentListLessonView
 
 
 app_name = "course"
@@ -14,4 +14,5 @@ urlpatterns = [
     path('create-lesson/',CreateLessonView.as_view(),name="create_lesson"),
     path('list-lessons/<int:course_id>/',ListLessonView.as_view(),name="list_lessons"),
     path('detail-lessons/<int:lesson_id>/',DetailLessonView.as_view(),name="detail_lesson"),
+    path('lessons-list/<int:course_id>/',StudentListLessonView.as_view(),name="lessons_list"),
 ]
