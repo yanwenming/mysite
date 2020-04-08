@@ -8,6 +8,8 @@ from django.urls import reverse_lazy
 from django.http import HttpResponse
 import json
 from django.views import View
+from django.shortcuts import get_object_or_404
+from django.views.generic.base import TemplateResponseMixin
 
 
 # Create your views here.
@@ -80,3 +82,22 @@ class CreateLessonView(LoginRequiredMixin,View):
             new_lesson.user = self.request.user
             new_lesson.save()
             return redirect("course:manage_course")
+
+
+class ListLessonView(LoginRequiredMixin,TemplateResponseMixin,View):
+    login_url = "/account/login/"
+    template_name = 'course/manage/list_lessons.html'
+
+    def get( self,request,course_id ):
+        course = get_object_or_404(Course,id=course_id)
+        return self.render_to_response({'course':course})
+
+
+#课程内容详情视图
+class DetailLessonView(LoginRequiredMixin,TemplateResponseMixin,View):
+    login_url = "/account/login/"
+    template_name = "course/manage/detail_lesson.html"
+
+    def get( self,request,lesson_id ):
+        lesson = get_object_or_404(Lesson,id=lesson_id)
+        return self.render_to_response({"lesson":lesson})
