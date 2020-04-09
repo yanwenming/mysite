@@ -11,7 +11,7 @@ def blog_title(request):
 
 
 #博客文章详情方法
-def blog_article(request,article_id):  #传入博客文章id
+def blog_article(request,article_id):  #传入博客文章article_id，article_id来自URL地址里面的参数
     # article = BlogArticles.objects.get(id=article_id)
     article = get_object_or_404(BlogArticles,id=article_id)  #对BlogArticles依据id进行查询，如果没有查询到任何数据，就返回404错误
     pub = article.publish_date

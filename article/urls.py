@@ -3,6 +3,7 @@ from . import views,list_views
 
 
 app_name = "article"
+
 urlpatterns = [
     path('article-column/',views.article_column,name="article_column"),  # 这里设置name，为了在模板文件中，写name就能找到这个路由
     path('rename-column/', views.rename_article_column, name="rename_article_column"),
