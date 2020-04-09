@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
+
+
+#博客数据模型类
 class BlogArticles(models.Model):
     title = models.CharField(max_length = 300)
     author = models.ForeignKey(User,on_delete = models.CASCADE,related_name = "blog_ports")
