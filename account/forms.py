@@ -3,9 +3,10 @@ from django.contrib.auth.models import User
 from .models import UserProfile,UserInfo
 
 
+#用户登录表单类
 class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget = forms.PasswordInput)
+    username = forms.CharField(label="用户名")
+    password = forms.CharField(widget = forms.PasswordInput,label = "密码")
 
 
 class RegistrationForm(forms.ModelForm):

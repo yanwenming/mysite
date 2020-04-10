@@ -11,6 +11,7 @@ from django.urls import reverse
 # Create your views here.
 
 
+#用户登录视图
 def user_login(request):
     if request.method == "POST":
         login_form = LoginForm(request.POST)

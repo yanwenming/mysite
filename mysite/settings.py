@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog',
-    'account',
+    'blog', #添加博客应用
+    'account', #添加账号应用
     'article',
     'image',
     # 'sorl.thumbnail',
@@ -85,6 +85,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 
+#配置MySql数据库信息
 DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
