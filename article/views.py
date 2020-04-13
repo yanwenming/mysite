@@ -19,9 +19,22 @@ def article_column(request):
     # columns = ArticleColumn.objects.filter(user=request.user)
     # return render(request,"article/column/article_column.html",{"columns":columns}
     if request.method == "GET":
-        columns = ArticleColumn.objects.filter(user=request.user)
+        columns_list = ArticleColumn.objects.filter(user=request.user)
         column_from = ArticleColumnForm()
-        return render(request,"article/column/article_column.html",{"columns":columns,"column_form":column_from})  #传入2个参数columns跟column_form到article_column.html模板中
+        #下面是分页方法
+        paginator = Paginator(columns_list,5)
+        page = request.GET.get('page')
+        try:
+            current_page = paginator.page(page)
+            columns = current_page.object_list
+        except PageNotAnInteger:
+            current_page = paginator.page(1)
+            columns = current_page.object_list
+        except EmptyPage:
+            current_page = paginator.page(paginator.num_pages)
+            columns = current_page.object_list
+
+        return render(request,"article/column/article_column.html",{"columns":columns,"column_form":column_from,"page": current_page})  #传入2个参数columns跟column_form到article_column.html模板中
     if request.method == "POST":
         column_name = request.POST['column']
         columns = ArticleColumn.objects.filter(user_id=request.user.id,column=column_name) #7传入当前用户跟栏目名称2个参数后，来查询当前用户是否已经创建过当前的栏目名称，如果没有创建该栏目则允许创建提交，否则创建失败
