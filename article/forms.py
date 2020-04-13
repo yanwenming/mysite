@@ -2,6 +2,7 @@ from django import forms
 from .models import ArticleColumn,ArticlePost,Comment,ArticleTag
 
 
+#栏目表单类
 class ArticleColumnForm(forms.ModelForm):
     class Meta:
         model = ArticleColumn

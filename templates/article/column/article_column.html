@@ -4,7 +4,7 @@
 {% block content %}
 <div>
     <p class="text-right"><!--button class="btn btn-primary">add column</button-->
-        <button id= "add_column" onclick="add_column()" class="btn btn-primary"> add column</button>
+        <button id= "add_column" onclick="add_column()" class="btn btn-primary"> 新增栏目</button>
     </p>
     <table class="table table-hover">
         <tr>
@@ -45,7 +45,7 @@
             content: '<div class="text-center" style="margin-top:20px">\
                 <p> 请输入新的栏目名称</p>\
                     <p>{{ column_form.column }}</p>\
-</div > ',
+</div >',
             btn: ['确定', '取消'],
             yes: function (index, layero) {
                 column_name = $('#id_column').val();
@@ -56,7 +56,7 @@
                     success: function (e) {
                         if (e == "1") {
                             parent.location.reload();
-                            layer.msg("good");
+                            layer.msg("提交成功");
                         } else {
                             layer.msg("此栏目已有，请更换名称")
                         }
@@ -76,7 +76,7 @@
             skin: "layui-layer-rim",
             area: ["400px", "200px"],
             title: "编辑栏目",
-            content: '<div class="text-center" style="margin-top:20px"> <p>需编辑的栏目名称</p><p><input type="text" id="new_name" value="'+name+'"></p> </div>',
+            content: '<div class="text-center" style="margin-top:20px"> <p>需编辑的栏目名称</p><p><input type="text" id="new_name" value="'+name+'"></p></div>',
             btn:['确定', '取消'],
             yes: function(index, layero){
                 new_name = $("#new_name").val();
@@ -87,7 +87,7 @@
                     success: function(e){
                         if(e=="1"){
                             parent.location.reload();
-                            layer.msg("good");
+                            layer.msg("提交成功");
                         }else{
                             layer.msg("新的名称没有保存,修改失败。")
                         }
@@ -113,7 +113,7 @@
                     success: function(e){
                         if(e=="1"){
                             parent.location.reload();
-                            layer.msg("has been deleted.");
+                            layer.msg("删除成功");
                         }else{
                             layer.msg("删除失败");
                         }

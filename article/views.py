@@ -12,18 +12,19 @@ import json
 # Create your views here.
 
 
+#新增栏目的视图
 @login_required(login_url = '/account/login')
-@csrf_exempt #6
+@csrf_exempt #解决提交表单中遇到的CSRF问题的一种方式
 def article_column(request):
     # columns = ArticleColumn.objects.filter(user=request.user)
     # return render(request,"article/column/article_column.html",{"columns":columns}
     if request.method == "GET":
         columns = ArticleColumn.objects.filter(user=request.user)
         column_from = ArticleColumnForm()
-        return render(request,"article/column/article_column.html",{"columns":columns,"column_form":column_from})
+        return render(request,"article/column/article_column.html",{"columns":columns,"column_form":column_from})  #传入2个参数columns跟column_form到article_column.html模板中
     if request.method == "POST":
         column_name = request.POST['column']
-        columns = ArticleColumn.objects.filter(user_id=request.user.id,column=column_name)#7
+        columns = ArticleColumn.objects.filter(user_id=request.user.id,column=column_name) #7传入当前用户跟栏目名称2个参数后，来查询当前用户是否已经创建过当前的栏目名称，如果没有创建该栏目则允许创建提交，否则创建失败
         if columns:
             return HttpResponse('2')
         else:
@@ -31,16 +32,17 @@ def article_column(request):
             return HttpResponse('1')
 
 
+#编辑栏目的视图
 @login_required(login_url = '/account/login')
-@require_POST
+@require_POST  #目的是保证此视图函数只接受通过POST方法提交的数据
 @csrf_exempt
 def rename_article_column(request):
     column_name = request.POST["column_name"]
     column_id = request.POST['column_id']
     try:
-        line = ArticleColumn.objects.get(id=column_id)
+        line = ArticleColumn.objects.get(id=column_id) #根据所要修改的栏目名称所在记录的id，查询到该数据，并建立实例对象
         line.column = column_name #重新赋值
-        line.save()
+        line.save() #将数据保存到数据库
         return HttpResponse("1")
     except:
         return HttpResponse("0")
