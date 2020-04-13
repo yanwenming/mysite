@@ -46,14 +46,15 @@ def rename_article_column(request):
         return HttpResponse("0")
 
 
+#删除栏目的视图
 @login_required(login_url = '/account/login')
 @require_POST
 @csrf_exempt
 def del_article_column(request):
-    column_id = request.POST["column_id"]
+    column_id = request.POST["column_id"] #获取Ajax传过来的column_id
     try:
         line = ArticleColumn.objects.get(id=column_id)
-        line.delete() #1 删除该记录
+        line.delete() # 删除该记录
         return HttpResponse("1")
     except:
         return HttpResponse("2")

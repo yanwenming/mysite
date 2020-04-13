@@ -147,6 +147,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR,"static"),
 )
 
+#设置登录后重定向到home页面，即http://127.0.0.1:8000/home/
 LOGIN_REDIRECT_URL = '/home/'
 
 LOGIN_URL = '/account/login/'

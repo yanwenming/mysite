@@ -12,15 +12,17 @@
             <td>栏目名称</td>
             <td>操作</td>
         </tr>
+        <!--获取当前登录用户创建的所有栏目信息，通过for循环遍历，在前端展示-->
         {% for column in columns %}
         <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ column.column }}</td>
             <td>
-                <a name="edit" href="javascript:" onclick="edit_column(this, {{ column.id }})">
+                <a name="edit" href="javascript:;" onclick="edit_column(this, {{ column.id }})">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
-                <a name="delete" href="javascript:" onclick="del_column(this, {{ column.id }})">
+                <!-- this指当前标签元素-->
+                <a name="delete" href="javascript:;" onclick="del_column(this, {{ column.id }})">
                     <span class="glyphicon glyphicon-trash" style="margin-left:20px;"></span>
                 </a>
             </td>
