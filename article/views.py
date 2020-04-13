@@ -22,7 +22,7 @@ def article_column(request):
         columns_list = ArticleColumn.objects.filter(user=request.user)
         column_from = ArticleColumnForm()
         #下面是分页方法
-        paginator = Paginator(columns_list,5)
+        paginator = Paginator(columns_list,10)
         page = request.GET.get('page')
         try:
             current_page = paginator.page(page)
@@ -79,12 +79,12 @@ def del_article_column(request):
 @login_required(login_url='/account/login')
 @csrf_exempt
 def article_post(request):
-    if request.method=="POST":
+    if request.method == "POST":
         article_post_form = ArticlePostForm(data=request.POST)
-        if article_post_form.is_valid():
+        if article_post_form.is_valid(): #检查表单数据是否检验通过
             cd = article_post_form.cleaned_data
             try:
-                new_article = article_post_form.save(commit=False)
+                new_article = article_post_form.save(commit=False) #先不提交到数据库
                 new_article.author = request.user
                 new_article.column = request.user.article_column.get(id=request.POST['column_id'])
                 new_article.save()
@@ -98,9 +98,9 @@ def article_post(request):
                 return HttpResponse("2")
         else:
             return HttpResponse("3")
-    else:
+    else: #GET方式
         article_post_form = ArticlePostForm()
-        article_columns = request.user.article_column.all()
+        article_columns = request.user.article_column.all() #获取当前用户的所有栏目
         article_tags = request.user.tag.all()#获取当前用户的所有文章标签
         return render(request, "article/column/article_post.html",{"article_post_form":article_post_form, "article_columns":article_columns, "article_tags":article_tags})
 

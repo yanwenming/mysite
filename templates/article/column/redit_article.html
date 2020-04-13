@@ -67,7 +67,7 @@ function redit_article(){
         data: {"title":title, "body":body, "column_id":column_id},
         success: function(e){
             if(e=="1"){
-                layer.msg("successful");
+                layer.msg("编辑成功");
                 location.href = "{% url 'article:article_list' %}";
             }else{
                 layer.msg("sorry.");

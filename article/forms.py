@@ -13,7 +13,7 @@ class ArticleColumnForm(forms.ModelForm):
 class ArticlePostForm(forms.ModelForm):
     class Meta:
         model = ArticlePost
-        fields = ("title","body")
+        fields = ("title","body") #from表单显示的字段
 
 
 class CommentForm(forms.ModelForm):
