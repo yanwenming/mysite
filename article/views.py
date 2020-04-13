@@ -41,7 +41,7 @@ def article_column(request):
         if columns:
             return HttpResponse('2')
         else:
-            ArticleColumn.objects.create(user=request.user,column=column_name)
+            ArticleColumn.objects.create(user=request.user,column=column_name) #create()函数直接让数据插入数据库
             return HttpResponse('1')
 
 
@@ -105,10 +105,11 @@ def article_post(request):
         return render(request, "article/column/article_post.html",{"article_post_form":article_post_form, "article_columns":article_columns, "article_tags":article_tags})
 
 
+#文章标题列表视图
 @login_required(login_url = '/account/login')
 def article_list(request):
-    articles_list = ArticlePost.objects.filter(author = request.user)
-    paginator = Paginator(articles_list, 2)
+    articles_list = ArticlePost.objects.filter(author = request.user) #通过author属性，可以查询对应作者所创建的所有文章
+    paginator = Paginator(articles_list, 10)
     page = request.GET.get('page')
     try :
         current_page = paginator.page(page)
@@ -122,6 +123,7 @@ def article_list(request):
     return render(request , "article/column/article_list.html", {"articles": articles, "page": current_page})
 
 
+#文章详情视图
 @login_required(login_url = '/account/login')
 def article_detail(request,id,slug):
     article=get_object_or_404(ArticlePost,id=id,slug=slug)

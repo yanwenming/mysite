@@ -62,7 +62,7 @@ function publish_article(){
         success: function(e){
             if(e=="1"){
                 layer.msg("发布成功");
-                location.href = "{% url 'article:article_list' %}";
+                location.href = "{% url 'article:article_list' %}"; //发布成功，跳转到文章列表页面
             }else if(e=="2"){
                 layer.msg("sorry.") ;
             }else{

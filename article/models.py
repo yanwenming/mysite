@@ -8,6 +8,7 @@ from slugify import slugify
 # Create your models here.
 
 
+#文章栏目数据模型
 class ArticleColumn(models.Model):
     user = models.ForeignKey(User,on_delete = models.CASCADE,related_name = 'article_column')
     column = models.CharField(max_length = 200)
@@ -39,7 +40,8 @@ class ArticlePost(models.Model):
     article_tag = models.ManyToManyField(ArticleTag,related_name = 'article_tag',blank = True)
 
     class Meta:
-        ordering = ("-updated",)
+        ordering = ("-updated",) #按照更新时间updated字段进行降序排序，最新的放在最前面
+        # ordering = ("updated" ,)  # 按照更新时间updated字段进行升序排序，最久的放在最前面
         index_together = (('id', 'slug'),) #对数据库中这2个字段建立索引
 
     def __str__( self ):
@@ -51,7 +53,7 @@ class ArticlePost(models.Model):
         super(ArticlePost , self).save(*args, **kargs)
 
     def get_absolute_url( self ):
-        return reverse("article:article_detail", args = [self.id , self.slug])
+        return reverse("article:article_detail", args = [self.id , self.slug])  #得到相应文章的路径
 
     def get_url_path( self ):
         return reverse("article:article_content", args = [self.id , self.slug])
