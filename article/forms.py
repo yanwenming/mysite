@@ -13,7 +13,7 @@ class ArticleColumnForm(forms.ModelForm):
 class ArticlePostForm(forms.ModelForm):
     class Meta:
         model = ArticlePost
-        fields = ("title","body") #from表单显示的字段
+        fields = ("title","body") #将ArticlePost表中的字段拿出来，需要什么字段拿什么字段，这里列出来只需要拿title,body2个字段
 
 
 class CommentForm(forms.ModelForm):

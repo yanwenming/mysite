@@ -79,7 +79,7 @@ def del_article_column(request):
 @login_required(login_url='/account/login')
 @csrf_exempt
 def article_post(request):
-    if request.method == "POST":
+    if request.method == "POST": #以POST方式提交数据
         article_post_form = ArticlePostForm(data=request.POST)
         if article_post_form.is_valid(): #检查表单数据是否检验通过
             cd = article_post_form.cleaned_data
