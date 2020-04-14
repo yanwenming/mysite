@@ -24,11 +24,13 @@
         </div>
     <div>
         <p class="text-center">
+            <!--            点赞操作实现方法-->
             <a onclick="like_article({{ article.id }},'like')" href="#">
-                <span class="glyphicon glyphicon-thumbs-up">like</span>
+                <span class="glyphicon glyphicon-thumbs-up">点赞</span>
             </a>
+            <!--            取消点赞操作实现方法-->
             <a onclick="like_article({{ article.id }},'unlike')" href="#">
-                <span style="margin-left:15px;" class="glyphicon glyphicon-thumbs-down">unlike</span>
+                <span style="margin-left:15px;" class="glyphicon glyphicon-thumbs-down">取消点赞</span>
             </a>
         </p>
     </div>

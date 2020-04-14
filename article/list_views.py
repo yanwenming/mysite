@@ -73,6 +73,7 @@ def article_detail(request, id, slug):
     # return render(request, "article/list/article_content.html", {"article":article})
 
 
+#文章点赞视图
 @csrf_exempt
 @require_POST
 @login_required(login_url = '/account/login/')
@@ -83,7 +84,7 @@ def like_article(request):
         try:
             article =ArticlePost.objects.get(id=article_id)
             if action == "like":
-                article.user_like.add(request.user)
+                article.user_like.add(request.user) #将article实例对象与user实例对象建立关联，通过add在article_articlepost_user_like表增加一个记录，表示那个用户点赞了这篇文章
                 return HttpResponse("1")
             else:
                 article.user_like.remove(request.user)
