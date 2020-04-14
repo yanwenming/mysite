@@ -15,18 +15,19 @@ from django.conf import settings
 r = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB)
 
 
+#文章标题列表视图
 def article_titles(request,username=None):
     if username:
-        user = User.objects.get(username = username)#获取用户对象
-        articles_title = ArticlePost.objects.filter(author = user)
+        user = User.objects.get(username = username) #获取用户对象
+        articles_title = ArticlePost.objects.filter(author = user) #获取指定用户名下所有的文章信息
         try:
             userinfo = user.userinfo
         except:
             userinfo = None
     else :
-        articles_title = ArticlePost.objects.all()
+        articles_title = ArticlePost.objects.all() #获取所有的文章信息
         # articles_title = ArticlePost.objects.all()
-    paginator = Paginator(articles_title , 2)
+    paginator = Paginator(articles_title , 5) #进行分页处理，每页显示5条记录
     page = request.GET.get('page')
     try :
         current_page = paginator.page(page)
@@ -38,19 +39,20 @@ def article_titles(request,username=None):
         current_page = paginator.page(paginator.num_pages)
         articles = current_page.object_list
 
-    if username :
+    if username:
         return render(request, "article/list/author_articles.html",
                         {"articles": articles , "page": current_page, "userinfo": userinfo, "user": user})
     return render(request, "article/list/article_titles.html", {"articles": articles, "page": current_page})
 
 
-def article_detail( request , id , slug ) :
-    article = get_object_or_404( ArticlePost , id = id , slug = slug ) #调用django get_object_or_404方法，它会默认的调用django 的get方法， 如果查询的对象不存在的话，会抛出一个Http404的异常
+#文章详情视图
+def article_detail( request, id, slug ):
+    article = get_object_or_404( ArticlePost, id = id, slug = slug ) #调用django get_object_or_404方法，它会默认的调用django 的get方法， 如果查询的对象不存在的话，会抛出一个Http404的异常
     total_views = r.incr( "article:{}:views".format ( article.id ) ) #记录每一个文章的访问次数
     r.zincrby( 'article_ranking' , 1 , article.id ) #根据amount所设定的值增加有序集合name中的value值
 
     article_ranking = r.zrange( "article_ranking" , 0 , -1 , desc = True )[:10] #获取article_ranking中排序前10的对象
-    article_ranking_ids = [int ( id ) for id in article_ranking]
+    article_ranking_ids = [int(id) for id in article_ranking]
     most_viewed = list( ArticlePost.objects.filter( id__in = article_ranking_ids ) )
     most_viewed.sort( key = lambda x : article_ranking_ids.index ( x.id ) )
 

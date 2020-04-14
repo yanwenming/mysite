@@ -56,7 +56,7 @@ class ArticlePost(models.Model):
         return reverse("article:article_detail", args = [self.id , self.slug])  #得到相应文章的路径
 
     def get_url_path( self ):
-        return reverse("article:article_content", args = [self.id , self.slug])
+        return reverse("article:article_content", args = [self.id , self.slug]) #得到相应文章的路径
 
 
 #评论功能数据模型

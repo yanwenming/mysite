@@ -130,6 +130,7 @@ def article_detail(request,id,slug):
     return render(request,"article/column/article_detail.html",{"article":article})
 
 
+#删除文章视图
 @login_required(login_url = '/account/login')
 @require_POST
 @csrf_exempt
@@ -143,6 +144,7 @@ def del_article(request):
         return HttpResponse("2")
 
 
+#编辑文章视图
 @login_required(login_url = '/account/login')
 @csrf_exempt
 def redit_article(request,article_id):
