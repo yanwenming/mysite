@@ -41,7 +41,7 @@
             <div class="row">
                 <div class="col-md-4 text-right"><span>本人介绍：</span></div>
                 <div class="col-md-8 text-left">{{userinfo.aboutme}}</div>
-                <a href="{% url 'account:edit_my_information' %}"><button class="btn btn-primary btn-lg">eidt my information</button></a>
+                <a href="{% url 'account:edit_my_information' %}"><button class="btn btn-primary btn-lg">编辑</button></a>
             </div>
         </div>
 <!--        <div class="col-md-6">-->
@@ -51,7 +51,7 @@
             <img name="user_face" src="{% static 'images/newton.jpg' %}" class="img-circle" width="270px" id="my_photo">
         </div>
         <div style="margin-right:100px">
-            <button class="btn btn-primary btn-lg" id="upload_image" onclick="upload_image_layer()">upload my photo</button>
+            <button class="btn btn-primary btn-lg" id="upload_image" onclick="upload_image_layer()">上传</button>
         </div>
     </div>
 </div>

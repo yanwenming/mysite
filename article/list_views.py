@@ -17,8 +17,8 @@ r = redis.StrictRedis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=set
 
 #文章标题列表视图
 def article_titles(request,username=None):
-    if username:
-        user = User.objects.get(username = username) #获取用户对象
+    if username: #当username有值时
+        user = User.objects.get(username = username) #根据传入的username获取用户对象
         articles_title = ArticlePost.objects.filter(author = user) #获取指定用户名下所有的文章信息
         try:
             userinfo = user.userinfo
@@ -46,7 +46,7 @@ def article_titles(request,username=None):
 
 
 #文章详情视图
-def article_detail( request, id, slug ):
+def article_detail(request, id, slug):
     article = get_object_or_404( ArticlePost, id = id, slug = slug ) #调用django get_object_or_404方法，它会默认的调用django 的get方法， 如果查询的对象不存在的话，会抛出一个Http404的异常
     total_views = r.incr( "article:{}:views".format ( article.id ) ) #记录每一个文章的访问次数
     r.zincrby( 'article_ranking' , 1 , article.id ) #根据amount所设定的值增加有序集合name中的value值
