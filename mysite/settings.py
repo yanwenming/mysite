@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'account', #添加账号应用
     'article',
     'image',
-    # 'sorl.thumbnail',
+    'sorl.thumbnail',
     'course',
 ]
 
