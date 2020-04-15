@@ -6,7 +6,7 @@ from .fields import OrderField
 # Create your models here.
 
 
-#课程的数据模型
+#课程数据模型
 class Course(models.Model):
     user = models.ForeignKey(User,on_delete = models.CASCADE,related_name = "courses_user")
     title = models.CharField(max_length = 200)

@@ -10,6 +10,7 @@
             <td>发布日期</td>
         </tr>
         {% for course in courses %}
+        <!-- courses变量名在CourseListView视图中定义的context_object_name指出       -->
         <tr id="{{ forloop.counter }}">
             <td>{{ forloop.counter }}</td>
             <td><a href="{% url 'course:lessons_list' course.id %}">{{ course.title }}</a></td>

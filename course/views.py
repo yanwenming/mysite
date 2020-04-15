@@ -14,7 +14,7 @@ from django.views.generic.base import TemplateResponseMixin
 
 # Create your views here.
 
-
+#课程列表视图
 class CourseListView(ListView):
     model = Course #获取Course中的所有数据
     context_object_name = "courses" #声明传入模板course_list.html中的变量名称
@@ -33,7 +33,7 @@ class UserCourseMixin(UserMixin,LoginRequiredMixin):
 
 
 class ManageCourseListView(UserCourseMixin, ListView):
-    context_object_name = "courses"
+    context_object_name = "courses"  #此处的courses返回的是request.user名下创建的courses，原因是通过继续UserMinxin的return实现
     template_name = 'course/manage/manage_course_list.html'
 
 
