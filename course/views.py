@@ -55,7 +55,7 @@ class CreateCourseView(UserCourseMixin,CreateView):
 #删除课程的方法
 class DeleteCourseView(UserCourseMixin, DeleteView):
     #template_name = 'course/manage/delete_course_confirm.html'
-    success_url = reverse_lazy("course:manage_course")
+    success_url = reverse_lazy("course:manage_course") #删除成功，跳转的页面
 
     def dispatch(self, *args, **kwargs):
         resp = super(DeleteCourseView, self).dispatch(*args, **kwargs)

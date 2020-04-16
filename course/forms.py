@@ -2,6 +2,7 @@ from django import forms
 from .models import Course,Lesson
 
 
+#创建课程表单
 class CreateCourseForm(forms.ModelForm):
     class Meta:
         model = Course
