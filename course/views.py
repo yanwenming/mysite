@@ -71,11 +71,11 @@ class CreateLessonView(LoginRequiredMixin,View):
     model = Lesson
     login_url = "/account/login/"
 
-    def get( self,request,*args,**kwargs ):
-        form = CreateLessonForm(user = self.request.user)
+    def get(self,request,*args,**kwargs):
+        form = CreateLessonForm(user = self.request.user) #创建表单类实例
         return render(request,"course/manage/create_lesson.html",{"form":form})
 
-    def post( self,request,*args,**kwargs ):
+    def post(self,request,*args,**kwargs):
         form = CreateLessonForm(self.request.user,request.POST,request.FILES)
         if form.is_valid():
             new_lesson = form.save(commit = False)
@@ -84,6 +84,7 @@ class CreateLessonView(LoginRequiredMixin,View):
             return redirect("course:manage_course")
 
 
+#课程内容标题列表视图
 class ListLessonView(LoginRequiredMixin,TemplateResponseMixin,View):
     login_url = "/account/login/"
     template_name = 'course/manage/list_lessons.html'

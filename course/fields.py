@@ -8,7 +8,7 @@ class OrderField(models.PositiveIntegerField):
         super(OrderField,self).__init__(*args,**kwargs)
 
     #pre_save在保存之前对数值进行预处理
-    def pre_save(self, model_instance, add):
+    def pre_save(self, model_instance, add):  #model_instance为引用的实例，add为该实例是否第一次被保存
         if getattr(model_instance,self.attname) is None:
             try:
                 qs = self.model.objects.all()

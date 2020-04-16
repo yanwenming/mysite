@@ -9,6 +9,7 @@ class CreateCourseForm(forms.ModelForm):
         fields =("title","overview")
 
 
+#课程内容表单
 class CreateLessonForm(forms.ModelForm):
     class Meta:
         model = Lesson
