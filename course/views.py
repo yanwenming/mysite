@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.views.generic import TemplateView,ListView
-from django.views.generic.edit import CreateView,DeleteView
+from django.views.generic.edit import CreateView,DeleteView,UpdateView
 from .models import Course,Lesson
 from braces.views import LoginRequiredMixin
 from .forms import CreateCourseForm,CreateLessonForm
@@ -50,6 +50,13 @@ class CreateCourseView(UserCourseMixin,CreateView):
             new_course.save()
             return redirect("course:manage_course") #当表单数据保存以后，重新跳转到指定页面
         return self.render_to_response({"form":form})
+
+
+#编辑课程的方法
+class UpdateCourseView(UserCourseMixin,UpdateView):
+    fields = ['title','overview'] #声明在表单中显示的字段
+    template_name = 'course/manage/update_course.html'  #指定前端展示的html模板
+    success_url = reverse_lazy("course:manage_course")  #提交后调整页面
 
 
 #删除课程的方法

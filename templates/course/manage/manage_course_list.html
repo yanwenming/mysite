@@ -22,7 +22,7 @@
             <td>{{ course.title }}</td>
             <td>{{ course.created|date:"Y-m-d" }}</td>
             <td>
-                <a name="edit" href="javascript:"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a class="edit" name="edit"  href="{% url 'course:update_course' course.id %}"><span class="glyphicon glyphicon-pencil"></span></a>
                 <a class="delete" name="delete" href="{% url 'course:delete_course' course.id %}"><span class="glyphicon glyphicon-trash" style="margin-left:20px;"></span></a>
                 <a href="{% url 'course:list_lessons' course.id %}"><span class="glyphicon glyphicon-search" style="margin-left:20px; "></span></a>
             </td>
